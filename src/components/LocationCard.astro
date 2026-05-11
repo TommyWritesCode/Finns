@@ -227,6 +227,8 @@ const labelLocation = location.id === 'oakland' ? 'OAKLAND' : 'SOUTH SIDE';
     flex-direction: column;
     gap: 1.25rem;
     justify-content: center;
+    align-items: center;
+    text-align: center;
   }
 
   .location-eyebrow {
@@ -320,6 +322,7 @@ const labelLocation = location.id === 'oakland' ? 'OAKLAND' : 'SOUTH SIDE';
   .location-feature-item {
     display: flex;
     align-items: flex-start;
+    justify-content: center;
     gap: 0.625rem;
     color: rgba(244, 236, 216, 0.75);
     font-family: 'Inter', system-ui, sans-serif;
@@ -339,7 +342,12 @@ const labelLocation = location.id === 'oakland' ? 'OAKLAND' : 'SOUTH SIDE';
   @media (max-width: 767px) {
     .location-section {
       grid-template-columns: 1fr;
-      grid-template-rows: auto auto;
+      grid-template-rows: auto;
+      border-top: 2px solid rgba(212, 168, 75, 0.3);
+    }
+
+    .location-photo {
+      display: none;
     }
 
     .location-section--reversed .location-photo {
@@ -350,12 +358,14 @@ const labelLocation = location.id === 'oakland' ? 'OAKLAND' : 'SOUTH SIDE';
       order: 2;
     }
 
-    .location-photo {
-      min-height: 280px;
+    .location-content {
+      padding: 2rem 1.25rem;
     }
 
-    .location-content {
-      padding: 2.5rem 1.25rem;
+    .location-directions-btn {
+      width: 100%;
+      text-align: center;
+      box-sizing: border-box;
     }
   }
 </style>
