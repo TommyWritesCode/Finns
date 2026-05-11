@@ -1,0 +1,193 @@
+---
+// Event Inquiry Form Component
+---
+
+<section id="events" class="section-padding" style="background-color: #0f1a14;">
+  <div class="container max-w-3xl">
+    <h2 class="events-heading">
+      Make It a Night to Remember
+    </h2>
+    <p class="events-subhead">
+      Greek life formals, birthday takeovers, private parties. We've got the space and the vibe.
+    </p>
+
+    <form action="mailto:finnmccools@gmail.com" method="GET" enctype="text/plain" class="events-form">
+      <div class="space-y-5">
+        <div>
+          <label for="name" class="form-label">
+            Your Name <span class="form-required" aria-hidden="true">*</span>
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            class="form-input"
+          />
+        </div>
+
+        <div>
+          <label for="email" class="form-label">
+            Email Address <span class="form-required" aria-hidden="true">*</span>
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            class="form-input"
+          />
+        </div>
+
+        <div>
+          <label for="event-type" class="form-label">
+            Event Type
+          </label>
+          <input
+            type="text"
+            id="event-type"
+            name="event-type"
+            placeholder="e.g. Greek Life Formal, Birthday Party, Private Event…"
+            class="form-input"
+          />
+        </div>
+
+        <div>
+          <label for="date" class="form-label">
+            Preferred Date
+          </label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            class="form-input"
+          />
+        </div>
+
+        <div>
+          <label for="guest-count" class="form-label">
+            Number of Guests
+          </label>
+          <input
+            type="number"
+            id="guest-count"
+            name="guest-count"
+            min="1"
+            class="form-input"
+          />
+        </div>
+
+        <div>
+          <label for="message" class="form-label">
+            Tell us about your event
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            class="form-input"
+            style="resize: none;"
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="form-submit"
+        >
+          Send Inquiry
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<style>
+  .events-heading {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 900;
+    color: #D4A84B;
+    text-align: center;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.01em;
+  }
+
+  .events-subhead {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 1rem;
+    color: #F4ECD8;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    max-width: 36rem;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.9;
+  }
+
+  .events-form {
+    background-color: #111d15;
+    border-top: 4px solid #D4A84B;
+    border-radius: 6px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  .form-label {
+    display: block;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #F4ECD8;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.04em;
+  }
+
+  .form-required {
+    color: #D4A84B;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: #1a2e1a;
+    border: 1px solid rgba(212, 168, 75, 0.3);
+    border-radius: 4px;
+    color: #F4ECD8;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.9rem;
+    transition: border-color 0.2s, outline 0.2s;
+    outline: none;
+    box-sizing: border-box;
+  }
+
+  .form-input:focus {
+    border-color: #D4A84B;
+    outline: 2px solid rgba(212, 168, 75, 0.25);
+    outline-offset: 0;
+  }
+
+  .form-submit {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background-color: #D4A84B;
+    color: #0a0a0a;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 0.5rem;
+  }
+
+  .form-submit:hover {
+    background-color: #c49940;
+  }
+
+  .space-y-5 > * + * {
+    margin-top: 1.25rem;
+  }
+</style>

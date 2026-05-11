@@ -1,0 +1,8 @@
+# Cloudflare Workers static-assets deployment.
+# Replace `name` per client. Run `npx wrangler deploy` after `npm run build`.
+name = "finn-s-oakland-site"
+compatibility_date = "2026-01-01"
+
+[assets]
+directory = "./dist"
+not_found_handling = "404-page"

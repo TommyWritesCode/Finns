@@ -1,0 +1,58 @@
+---
+interface Props {
+  quote: string;
+  author: string;
+}
+
+const { quote, author } = Astro.props;
+---
+
+<div class="review-card">
+  <blockquote class="review-quote">
+    <p>"{quote}"</p>
+  </blockquote>
+
+  <cite class="review-cite">
+    <span class="review-author">&mdash; {author}</span>
+  </cite>
+</div>
+
+<style>
+  .review-card {
+    background-color: #111d15;
+    border: 1px solid rgba(212, 168, 75, 0.2);
+    border-radius: 4px;
+    padding: 2rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    height: 100%;
+  }
+
+  .review-quote {
+    flex: 1;
+    margin: 0;
+  }
+
+  .review-quote p {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #F4ECD8;
+    font-style: italic;
+    margin: 0;
+    opacity: 0.9;
+  }
+
+  .review-cite {
+    font-style: normal;
+  }
+
+  .review-author {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #D4A84B;
+    letter-spacing: 0.02em;
+  }
+</style>

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "oakland",
+    "name": "Finn McCool's Oakland",
+    "tagline": "Games, Patio, Party",
+    "address": "420 Semple St",
+    "city": "Pittsburgh",
+    "state": "PA",
+    "zip": "15213",
+    "phone": "+14122515918",
+    "phoneDisplay": "(412) 251-5918",
+    "hours": "Thursday - Saturday: 6pm - 2am",
+    "hoursNote": "Closed Sunday - Wednesday",
+    "openingHours": "Th-Sa 18:00-02:00",
+    "mapsUrl": "https://maps.google.com/?q=420+Semple+St,+Pittsburgh,+PA+15213",
+    "features": [
+      "Pool table and dart board",
+      "Outdoor patio open year-round",
+      "Sports on every screen",
+      "Right in the heart of the university bar scene"
+    ]
+  },
+  {
+    "id": "southside",
+    "name": "Finn McCool's South Side",
+    "tagline": "Right Where It Happens",
+    "address": "1501 E Carson St",
+    "city": "Pittsburgh",
+    "state": "PA",
+    "zip": "15203",
+    "phone": "+14122515918",
+    "phoneDisplay": "(412) 251-5918",
+    "hours": "Thursday - Saturday: 6pm - 2am",
+    "hoursNote": "Closed Sunday - Wednesday",
+    "openingHours": "Th-Sa 18:00-02:00",
+    "mapsUrl": "https://maps.google.com/?q=1501+E+Carson+St,+Pittsburgh,+PA+15203",
+    "features": [
+      "Prime spot on East Carson Street",
+      "Walking distance to everything on the South Side",
+      "The best spot on the South Side",
+      "Busy every weekend for a reason"
+    ]
+  }
+]

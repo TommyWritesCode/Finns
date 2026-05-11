@@ -1,0 +1,248 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+import LocationCard from "../components/LocationCard.astro";
+import ReviewCard from "../components/ReviewCard.astro";
+import EventInquiry from "../components/EventInquiry.astro";
+import locations from "../data/locations.json";
+import seo from "../data/seo.json";
+
+const pageData = seo.pages["/"];
+---
+
+<Layout title={pageData.title} description={pageData.description}>
+  <Header slot="header" />
+
+  <Hero />
+
+  <LocationCard
+    location={locations[0]}
+    accentColor="dark"
+    imageUrl="/bar.webp"
+    imageAlt="Interior of Finn McCools Oakland — warm lighting, bar, brick walls, string lights"
+    photos={[
+      { src: "/bar.webp", alt: "Interior bar at Finn McCools Oakland — bottles, brick, string lights" },
+      { src: "/buildingfront_oakland.webp", alt: "Finn McCools Oakland exterior — dark brick with Finn McCools sign" },
+      { src: "/darts_oakland.webp", alt: "Dart machines and game machines with colorful string lights" },
+      { src: "/patio_oakland.webp", alt: "Outdoor patio with yellow stools, barrels, astroturf, and string lights" },
+      { src: "/pooltable_oakland.webp", alt: "Pool table with Pittsburgh mascot mural — dogs playing pool" },
+      { src: "/drafts_oakland.webp", alt: "Draft tap handles — Coors Light, Penguins tap, and more" },
+    ]}
+  />
+
+  <LocationCard
+    location={locations[1]}
+    accentColor="dark"
+    imageUrl="/finns-southside.jpg"
+    imageAlt="Finn McCools South Side exterior at night — neon signs, corner building, people outside"
+    reversed={true}
+    photos={[
+      { src: "/finns-southside.jpg", alt: "Finn McCools South Side exterior at night — neon signs, corner building" },
+      { src: "/bar.webp", alt: "Interior bar — bottles, brick, string lights" },
+      { src: "/darts_oakland.webp", alt: "Dart machines and game machines with colorful string lights" },
+      { src: "/patio_oakland.webp", alt: "Outdoor patio with yellow stools, barrels, and string lights" },
+      { src: "/pooltable_oakland.webp", alt: "Pool table with Pittsburgh mascot mural" },
+      { src: "/drafts_oakland.webp", alt: "Draft tap handles — Coors Light, Penguins tap, and more" },
+    ]}
+  />
+
+  <!-- Reviews -->
+  <section class="reviews-section section-padding">
+    <div class="container">
+      <h2 class="reviews-heading">What Pittsburgh Is Saying</h2>
+      <div class="reviews-grid">
+        <ReviewCard
+          quote="Had the best experience at this bar! The drinks are incredible and the vibes are immaculate. The bartenders are the best in Southside. Kendall and Nicole know how to make a mean shot. Highly recommend the purple gatorade and white tea shots."
+          author="Marco DiBucci · Google ★★★★★"
+        />
+        <ReviewCard
+          quote="Greatest bar in the South Side. Bartenders are awesome. Bouncers are cool. Music is great. Can't ask for much more. Wish I could give it more than 5 stars."
+          author="Michael Masten · Google ★★★★★"
+        />
+        <ReviewCard
+          quote="We had a great time here. Prices were reasonable and it was such an interesting concept with lots of games. Had a nice vibe and a fun crowd. My bartender was as fun and efficient as she was gorgeous."
+          author="Chris Stovall · Google ★★★★★"
+        />
+      </div>
+    </div>
+  </section>
+
+  <EventInquiry />
+
+  <Footer slot="footer" />
+
+  <script type="application/ld+json" slot="schema" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BarOrPub",
+    "@id": "https://finnmcools.com/#oakland",
+    "name": "Finn McCool's Oakland",
+    "alternateName": "Finn McCools Oakland Pittsburgh",
+    "description": "Irish bar in Oakland Pittsburgh near the University of Pittsburgh. Pool table, dart boards, outdoor patio, TouchTunes jukebox, sports on every screen. Open Thursday through Saturday 6PM to 2AM.",
+    "url": "https://finnmcools.com",
+    "telephone": "+14122515918",
+    "priceRange": "$$",
+    "servesCuisine": "Bar Food",
+    "currenciesAccepted": "USD",
+    "paymentAccepted": "Cash, Credit Card",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "420 Semple St",
+      "addressLocality": "Pittsburgh",
+      "addressRegion": "PA",
+      "postalCode": "15213",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 40.4441,
+      "longitude": -79.9612
+    },
+    "hasMap": "https://maps.google.com/?q=420+Semple+St,+Pittsburgh,+PA+15213",
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "18:00", "closes": "02:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "18:00", "closes": "02:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "18:00", "closes": "02:00" }
+    ],
+    "amenityFeature": [
+      { "@type": "LocationFeatureSpecification", "name": "Pool Table", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Dart Board", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Outdoor Patio", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Sports TV", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Jukebox", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Event Space", "value": true }
+    ],
+    "sameAs": [
+      "https://maps.google.com/?q=420+Semple+St,+Pittsburgh,+PA+15213"
+    ],
+    "image": "https://finnmcools.com/og-image.jpg",
+    "keywords": "bar Oakland Pittsburgh, Irish bar Pittsburgh, college bar Oakland Pittsburgh, bars near Pitt, University of Pittsburgh bars, Oakland Pittsburgh nightlife"
+  })} />
+
+  <script type="application/ld+json" slot="schema" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BarOrPub",
+    "@id": "https://finnmcools.com/#southside",
+    "name": "Finn McCool's South Side",
+    "alternateName": "Finn McCools South Side Pittsburgh",
+    "description": "Irish bar on E Carson Street in Pittsburgh's South Side neighborhood. Open Thursday through Saturday 6PM to 2AM. Great drinks, great energy, right in the heart of Pittsburgh's nightlife strip.",
+    "url": "https://finnmcools.com",
+    "telephone": "+14122515918",
+    "priceRange": "$$",
+    "servesCuisine": "Bar Food",
+    "currenciesAccepted": "USD",
+    "paymentAccepted": "Cash, Credit Card",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "1501 E Carson St",
+      "addressLocality": "Pittsburgh",
+      "addressRegion": "PA",
+      "postalCode": "15203",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 40.4278,
+      "longitude": -79.9727
+    },
+    "hasMap": "https://maps.google.com/?q=1501+E+Carson+St,+Pittsburgh,+PA+15203",
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "18:00", "closes": "02:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "18:00", "closes": "02:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "18:00", "closes": "02:00" }
+    ],
+    "amenityFeature": [
+      { "@type": "LocationFeatureSpecification", "name": "Event Space", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Sports TV", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Nightlife", "value": true }
+    ],
+    "sameAs": [
+      "https://maps.google.com/?q=1501+E+Carson+St,+Pittsburgh,+PA+15203"
+    ],
+    "image": "https://finnmcools.com/og-image.jpg",
+    "keywords": "bar South Side Pittsburgh, Irish bar Pittsburgh, E Carson Street bars, South Side Pittsburgh nightlife, bars Pittsburgh Pennsylvania"
+  })} />
+
+  <script type="application/ld+json" slot="schema" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What are the hours for Finn McCool's Pittsburgh?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Finn McCool's is open Thursday through Saturday from 6PM to 2AM at both the Oakland and South Side locations. Closed Sunday through Wednesday."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where is Finn McCool's Oakland located?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Finn McCool's Oakland is located at 420 Semple St, Pittsburgh, PA 15213, in the heart of Oakland near the University of Pittsburgh."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where is Finn McCool's South Side located?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Finn McCool's South Side is located at 1501 E Carson St, Pittsburgh, PA 15203, right on Pittsburgh's main nightlife strip."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I book an event at Finn McCool's?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Finn McCool's hosts Greek life formals, birthday parties, and private events at both locations. Use the event inquiry form on the website or call (412) 251-5918."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What drink specials does Finn McCool's have?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Finn McCool's offers the Irish Fuel house cocktail for $6 every night, bucket deals for $18, $4 Jameson and Irish whiskey shots every Thursday, and $3 pitcher pours on Fridays and Saturdays."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the phone number for Finn McCool's Pittsburgh?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can reach Finn McCool's at (412) 251-5918."
+        }
+      }
+    ]
+  })} />
+</Layout>
+
+<style>
+  .reviews-section {
+    background-color: #0a0a0a;
+  }
+
+  .reviews-heading {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 700;
+    color: #D4A84B;
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .reviews-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 768px) {
+    .reviews-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

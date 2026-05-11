@@ -1,0 +1,130 @@
+---
+interface Props {
+  name: string;
+  description: string;
+  price?: string;
+  badge?: string;
+  day?: string;
+  featured?: boolean;
+}
+
+const { name, description, price, badge, day, featured = false } = Astro.props;
+---
+
+<div class={`special-card ${featured ? 'special-card--featured' : ''}`}>
+  {day && (
+    <div class="special-day-wrap">
+      <span class="special-day">{day}</span>
+    </div>
+  )}
+
+  <h3 class={`special-name ${featured ? 'special-name--featured' : ''}`}>
+    {name}
+  </h3>
+
+  {price && (
+    <span class="special-price">{price}</span>
+  )}
+
+  {badge && (
+    <div class="special-badge-wrap">
+      <span class="special-badge">{badge}</span>
+    </div>
+  )}
+
+  <p class="special-description">
+    {description}
+  </p>
+</div>
+
+<style>
+  .special-card {
+    background-color: #1a2e1a;
+    border: 1px solid #D4A84B;
+    border-radius: 4px;
+    padding: 1.75rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    height: 100%;
+    position: relative;
+  }
+
+  .special-card--featured {
+    border-width: 2px;
+    border-left-width: 4px;
+    padding: 2.25rem 2rem;
+  }
+
+  .special-price {
+    display: block;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #D4A84B;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .special-card--featured .special-price {
+    font-size: 3.5rem;
+  }
+
+  .special-day-wrap {
+    /* sits at the very top of the card — gap handles spacing */
+  }
+
+  .special-day {
+    display: inline-block;
+    padding: 0.2rem 0.75rem;
+    border-radius: 9999px;
+    background: transparent;
+    border: 1px solid #D4A84B;
+    color: #D4A84B;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .special-badge-wrap {
+    /* no extra margin needed — gap handles it */
+  }
+
+  .special-badge {
+    display: inline-block;
+    padding: 0.25rem 0.875rem;
+    border-radius: 9999px;
+    background-color: #D4A84B;
+    color: #0f1a14;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .special-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #D4A84B;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .special-name--featured {
+    font-size: 1.75rem;
+  }
+
+  .special-description {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #F4ECD8;
+    margin: 0;
+    flex: 1;
+    opacity: 0.9;
+  }
+</style>

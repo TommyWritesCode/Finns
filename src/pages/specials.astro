@@ -1,0 +1,128 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+import SpecialCard from "../components/SpecialCard.astro";
+import specials from "../data/specials.json";
+import seo from "../data/seo.json";
+
+const pageData = seo.pages["/specials"];
+const featuredSpecial = specials.find(s => s.featured);
+const otherSpecials = specials.filter(s => !s.featured);
+---
+
+<Layout title={pageData.title} description={pageData.description}>
+  <Header slot="header" />
+
+  <Hero
+    headline="Happy Hour, Irish Style"
+    subhead="Thursday through Saturday, 6PM to close. Irish Fuel, bucket specials, and drinks that actually taste good. We keep the deals real because we're here every weekend too."
+  />
+
+  {featuredSpecial && (
+    <section class="featured-section">
+      <div class="container max-w-4xl">
+        <SpecialCard
+          name={featuredSpecial.name}
+          description={featuredSpecial.description}
+          price={featuredSpecial.price}
+          badge={featuredSpecial.badge}
+          day={featuredSpecial.day}
+          featured={true}
+        />
+      </div>
+    </section>
+  )}
+
+  <section class="grid-section">
+    <div class="container">
+      <div class="specials-grid">
+        {otherSpecials.map((special) => (
+          <SpecialCard
+            name={special.name}
+            description={special.description}
+            price={special.price}
+            badge={special.badge}
+            day={special.day}
+            featured={false}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container cta-inner">
+      <h2 class="cta-heading">Ready to See What the Hype's About?</h2>
+      <a href="/" class="cta-btn">Find Your Location</a>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</Layout>
+
+<style>
+  .featured-section {
+    background-color: #0f1a14;
+    padding: 2.5rem 1rem 2rem;
+  }
+
+  .grid-section {
+    background-color: #0f1a14;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .specials-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 768px) {
+    .specials-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .cta-section {
+    background-color: #0a1a0f;
+    border-top: 1px solid rgba(212, 168, 75, 0.25);
+    padding: 4rem 1rem;
+  }
+
+  .cta-inner {
+    text-align: center;
+  }
+
+  .cta-heading {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #F4ECD8;
+    margin-bottom: 1.75rem;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 2.5rem;
+    background-color: #D4A84B;
+    border: 2px solid #D4A84B;
+    border-radius: 9999px;
+    color: #0f1a14;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .cta-btn:hover {
+    background-color: #D4A84B;
+    color: #0f1a14;
+  }
+</style>

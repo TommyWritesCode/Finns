@@ -1,0 +1,130 @@
+---
+const navLinks = [
+  { label: "Specials", href: "/specials" },
+  { label: "Book an Event", href: "/#events" },
+];
+---
+
+<header class="sticky top-0 z-50 bg-[#0f1a14] border-t border-t-[#D4A84B]/40 border-b border-b-[#D4A84B]/40">
+  <div class="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-2 md:h-[72px] md:px-4">
+
+    <!-- LEFT: logo -->
+    <a href="/" aria-label="Finn McCool's home" class="flex items-center">
+      <img
+        src="/logo.webp"
+        alt="Finn McCool's"
+        width="300"
+        height="120"
+        class="logo-cream h-12 w-auto md:h-[60px]"
+      />
+    </a>
+
+    <!-- RIGHT: desktop nav + mobile hamburger -->
+    <div class="flex items-center gap-6">
+
+      <!-- Desktop nav links -->
+      <nav aria-label="Primary" class="hidden items-center gap-8 md:flex">
+        {navLinks.map((item) => (
+          <a
+            href={item.href}
+            class="group relative text-[13px] font-semibold uppercase tracking-wider text-[#F4ECD8] transition-colors hover:text-[#D4A84B]"
+          >
+            {item.label}
+            <span class="absolute -bottom-1 left-0 h-px w-0 bg-[#D4A84B] transition-all duration-300 group-hover:w-full"></span>
+          </a>
+        ))}
+      </nav>
+
+      <!-- Mobile hamburger -->
+      <button
+        id="menu-toggle"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        class="flex h-11 w-11 items-center justify-center rounded-md text-[#D4A84B] transition-colors hover:bg-[#D4A84B]/10 md:hidden"
+      >
+        <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round">
+          <line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/>
+        </svg>
+        <svg id="icon-close" class="hidden" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round">
+          <line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/>
+        </svg>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- MOBILE PANEL -->
+  <div
+    id="mobile-menu"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Site menu"
+    class="invisible absolute inset-x-0 top-full -translate-y-2 border-t border-[#D4A84B]/60 bg-[#0f1a14] opacity-0 shadow-2xl transition-all duration-200 ease-out md:hidden"
+  >
+    <nav aria-label="Mobile" class="mx-auto flex max-w-[1200px] flex-col px-4 py-4">
+      {navLinks.map((item) => (
+        <a
+          href={item.href}
+          class="border-b border-[#D4A84B]/15 py-4 text-[16px] font-semibold uppercase tracking-wider text-[#F4ECD8] transition-colors hover:text-[#D4A84B]"
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<style>
+  /* Crop the plaque border off the inverted PNG so the type floats.
+     Replace with /logo-cream.svg when available and remove .logo-cream. */
+  .logo-cream {
+    filter: brightness(0) invert(1) drop-shadow(0 1px 0 rgba(0,0,0,0.4));
+    clip-path: inset(8% 6%);
+    transform: scale(1.18);
+    transform-origin: center;
+  }
+
+  /* Mobile menu open state */
+  #mobile-menu.is-open {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  body.menu-open { overflow: hidden; }
+</style>
+
+<script>
+  const btn = document.getElementById('menu-toggle');
+  const panel = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+
+  function setOpen(open: boolean) {
+    if (!btn || !panel || !iconOpen || !iconClose) return;
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    panel.classList.toggle('is-open', open);
+    document.body.classList.toggle('menu-open', open);
+    iconOpen.classList.toggle('hidden', open);
+    iconClose.classList.toggle('hidden', !open);
+  }
+
+  btn?.addEventListener('click', () => {
+    const isOpen = btn.getAttribute('aria-expanded') === 'true';
+    setOpen(!isOpen);
+  });
+
+  // Close on link click (anchor links inside the panel)
+  panel?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+
+  // Esc closes
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+
+  // Close if resized to desktop
+  const mq = window.matchMedia('(min-width: 768px)');
+  mq.addEventListener('change', (e) => { if (e.matches) setOpen(false); });
+</script>

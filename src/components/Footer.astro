@@ -1,0 +1,86 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <!-- Logo -->
+    <div class="footer-logo-wrap">
+      <img
+        src="/logo.webp"
+        alt="Finn McCools"
+        class="footer-logo"
+        width="300"
+        height="auto"
+        style="filter: brightness(0) invert(1);"
+      />
+      <a href="tel:+14122515918" class="footer-phone">(412) 251-5918</a>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="footer-bottom">
+      <p class="footer-copy">
+        &copy; {year} Finn McCool's Pittsburgh. All rights reserved.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: #0a1a0f;
+    color: #F4ECD8;
+    border-top: 1px solid rgba(212, 168, 75, 0.3);
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem 2rem;
+  }
+
+  .footer-logo-wrap {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-logo {
+    width: 300px;
+    height: auto;
+    display: inline-block;
+  }
+
+  .footer-phone {
+    display: block;
+    margin-top: 0.75rem;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #D4A84B;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: opacity 0.2s;
+  }
+
+  .footer-phone:hover {
+    opacity: 0.75;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(212, 168, 75, 0.2);
+    padding-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .footer-copy {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.75rem;
+    color: rgba(244, 236, 216, 0.5);
+    margin: 0;
+  }
+
+</style>

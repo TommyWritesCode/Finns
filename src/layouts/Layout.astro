@@ -1,0 +1,71 @@
+---
+import "../styles/global.css";
+import seo from "../data/seo.json";
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+}
+
+const {
+  title = seo.default_title,
+  description = seo.default_description,
+  canonical,
+  ogImage = seo.og_image,
+} = Astro.props;
+
+const pageTitle = title.includes(seo.site_name) ? title : `${title} — ${seo.site_name}`;
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site ?? "https://finnmcools.com").toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={`https://finnmcools.com${ogImage}`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={seo.locale} />
+    <meta property="og:site_name" content="Finn McCool's Pittsburgh" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`https://finnmcools.com${ogImage}`} />
+
+    <!-- Local SEO signals -->
+    <meta name="geo.region" content="US-PA" />
+    <meta name="geo.placename" content="Pittsburgh, Pennsylvania" />
+    <meta name="geo.position" content="40.4441;-79.9612" />
+    <meta name="ICBM" content="40.4441, -79.9612" />
+
+    <slot name="schema" />
+
+    <link rel="icon" type="image/svg+xml" href="/shamrock.svg" />
+
+    <!-- Preload hero LCP images -->
+    <link rel="preload" as="image" href="/bar.webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="/finns-southside.jpg" fetchpriority="high" />
+    <link rel="preload" as="image" href="/logo.webp" />
+  </head>
+  <body class="min-h-screen flex flex-col bg-[#0f1a14] text-[#F4ECD8]">
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <slot name="header" />
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+    <slot name="footer" />
+  </body>
+</html>

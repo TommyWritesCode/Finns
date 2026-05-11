@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Irish Fuel",
+    "description": "Our house cocktail that put us on the map. Premium Irish whiskey, fresh-squeezed citrus, ginger beer, and a secret splash that makes it dangerously smooth. One gets you loose. Two gets you legendary. Only at Finn McCool's.",
+    "price": "$6",
+    "badge": "House Special",
+    "day": "Every Night",
+    "featured": true
+  },
+  {
+    "name": "Bucket Deals",
+    "description": "Five ice-cold domestics or imports for one price. Perfect for the crew. Available all weekend long.",
+    "price": "$18",
+    "day": "Every Night",
+    "featured": false
+  },
+  {
+    "name": "Shot Tower Thursday",
+    "description": "Stack your shot night right. Jameson, Tullamore, and Bushmills flowing. Pittsburgh's favorite Thursday tradition.",
+    "price": "$4",
+    "day": "Thursday Only",
+    "featured": false
+  },
+  {
+    "name": "Weekend Pitcher Pour",
+    "description": "Grab a pitcher of Guinness, Smithwick's, or lager and own the table. Best deal on draft in Oakland and South Side.",
+    "price": "$3",
+    "badge": "Draft Special",
+    "day": "Fri & Sat",
+    "featured": false
+  }
+]

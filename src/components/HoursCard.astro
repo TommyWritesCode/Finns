@@ -1,0 +1,91 @@
+---
+// HoursCard — semantic HTML/CSS, Google-parseable, no image
+---
+
+<div class="hours-card" role="region" aria-label="Bar hours">
+  <p class="hours-header">&#9752; HOURS &#9752;</p>
+  <hr class="hours-divider" />
+  <dl>
+    <div class="hours-row">
+      <dt>Thursday</dt>
+      <dd>6 PM &ndash; 2 AM</dd>
+    </div>
+    <div class="hours-row">
+      <dt>Friday</dt>
+      <dd>6 PM &ndash; 2 AM</dd>
+    </div>
+    <div class="hours-row">
+      <dt>Saturday</dt>
+      <dd>6 PM &ndash; 2 AM</dd>
+    </div>
+  </dl>
+  <hr class="hours-divider" />
+  <p class="hours-closed">Closed Sun &middot; Mon &middot; Tue &middot; Wed</p>
+</div>
+
+<style>
+  .hours-card {
+    background-color: #0a1a0f;
+    border: 1px solid rgba(212, 168, 75, 0.25);
+    border-radius: 4px;
+    padding: 1.75rem 2rem;
+    max-width: 360px;
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  .hours-header {
+    color: #D4A84B;
+    font-size: 1rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin: 0 0 0.875rem 0;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  dl {
+    margin: 0;
+    padding: 0;
+  }
+
+  .hours-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.5rem;
+  }
+
+  .hours-row:last-child {
+    margin-bottom: 0;
+  }
+
+  dt {
+    color: #F4ECD8;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  dd {
+    color: #D4A84B;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .hours-divider {
+    border: none;
+    border-top: 1px solid rgba(212, 168, 75, 0.15);
+    margin: 0.875rem 0;
+  }
+
+  .hours-closed {
+    color: #8a9e91;
+    font-size: 0.75rem;
+    text-align: center;
+    font-family: 'Inter', system-ui, sans-serif;
+    margin: 0;
+    letter-spacing: 0.05em;
+  }
+</style>

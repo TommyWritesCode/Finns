@@ -1,0 +1,416 @@
+---
+// Hero component — split-screen by default (no props).
+// When headline/subhead props are passed (e.g. from specials page),
+// renders a simpler text hero so inner pages still work.
+
+interface Props {
+  headline?: string;
+  subhead?: string;
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+
+const { headline, subhead, primaryCta, secondaryCta } = Astro.props;
+const isSplitHero = !headline;
+---
+
+{isSplitHero ? (
+  <!-- SPLIT-SCREEN HERO (homepage) -->
+  <section class="hero-split">
+    <!-- Left half: Oakland / bar.webp -->
+    <div class="hero-half hero-left">
+      <div class="hero-overlay"></div>
+      <div class="hero-half-content hero-half-content--left">
+        <span class="location-label">OAKLAND</span>
+        <p class="location-address">420 Semple St, Pittsburgh PA</p>
+        <a href="#oakland" class="hero-cta">Oakland &rarr;</a>
+      </div>
+    </div>
+
+    <!-- Gold divider (desktop only) -->
+    <div class="hero-divider" aria-hidden="true"></div>
+
+    <!-- Center overlay: logo + tagline + hours -->
+    <div class="hero-center-overlay">
+      <div class="hero-center-pill">
+        <img
+          src="/logo.webp"
+          alt="Finn McCools"
+          class="hero-logo"
+          width="360"
+          height="auto"
+          style="filter: brightness(0) invert(1);"
+        />
+        <p class="hero-tagline">PITTSBURGH'S IRISH BAR &middot; TWO GREAT LOCATIONS</p>
+        <div class="hero-pill-ctas">
+          <a href="#oakland" class="hero-pill-cta hero-pill-cta--primary">OAKLAND</a>
+          <a href="#southside" class="hero-pill-cta">SOUTH SIDE</a>
+        </div>
+        <p class="hero-hours">OPEN THU &ndash; SAT &middot; 6PM&ndash;2AM</p>
+      </div>
+    </div>
+
+    <!-- Right half: South Side / finns-southside.jpg -->
+    <div class="hero-half hero-right">
+      <div class="hero-overlay hero-overlay--right"></div>
+      <div class="hero-half-content hero-half-content--right">
+        <span class="location-label">SOUTH SIDE</span>
+        <p class="location-address">1501 E Carson St, Pittsburgh PA</p>
+        <a href="#southside" class="hero-cta">South Side &rarr;</a>
+      </div>
+    </div>
+  </section>
+) : (
+  <!-- TEXT HERO (inner pages: specials, etc.) -->
+  <section class="text-hero">
+    <div class="text-hero-inner">
+      <h1 class="text-hero-headline">{headline}</h1>
+      {subhead && <p class="text-hero-subhead">{subhead}</p>}
+      {(primaryCta || secondaryCta) && (
+        <div class="text-hero-ctas">
+          {primaryCta && (
+            <a href={primaryCta.href} class="hero-cta-btn hero-cta-btn--primary">
+              {primaryCta.label}
+            </a>
+          )}
+          {secondaryCta && (
+            <a href={secondaryCta.href} class="hero-cta-btn hero-cta-btn--secondary">
+              {secondaryCta.label}
+            </a>
+          )}
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+<style>
+  /* ========= SPLIT HERO ========= */
+  .hero-split {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  .hero-half {
+    position: relative;
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .hero-left {
+    background-image: url('/bar.webp');
+  }
+
+  .hero-right {
+    background-image: url('/finns-southside.jpg');
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top right,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.3) 60%,
+      rgba(0, 0, 0, 0.1) 100%
+    );
+  }
+
+  .hero-overlay--right {
+    background: linear-gradient(
+      to top left,
+      rgba(0, 0, 0, 0.65) 0%,
+      rgba(0, 0, 0, 0.25) 60%,
+      rgba(0, 0, 0, 0.1) 100%
+    );
+  }
+
+  .hero-half-content {
+    position: relative;
+    z-index: 2;
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .hero-half-content--left {
+    align-items: flex-start;
+  }
+
+  .hero-half-content--right {
+    align-items: flex-end;
+    text-align: right;
+    margin-left: auto;
+  }
+
+  .location-label {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-variant: small-caps;
+    color: #D4A84B;
+  }
+
+  .location-address {
+    color: #F4ECD8;
+    font-size: 0.875rem;
+    font-family: 'Inter', system-ui, sans-serif;
+    margin: 0;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    margin-top: 0.75rem;
+    padding: 0.625rem 1.5rem;
+    background-color: #D4A84B;
+    color: #0f1a14;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: background-color 0.2s;
+  }
+
+  .hero-cta:hover {
+    background-color: #c49940;
+  }
+
+  /* Gold vertical divider */
+  .hero-divider {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #D4A84B;
+    z-index: 10;
+    transform: translateX(-50%);
+  }
+
+  /* Center overlay pill */
+  .hero-center-overlay {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    text-align: center;
+  }
+
+  .hero-center-pill {
+    background: rgba(10, 20, 12, 0.88);
+    border: 1px solid rgba(212, 168, 75, 0.55);
+    border-radius: 6px;
+    padding: 2.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    backdrop-filter: blur(6px);
+    min-width: 500px;
+  }
+
+  .hero-logo {
+    width: 360px;
+    height: auto;
+    display: block;
+  }
+
+  .hero-tagline {
+    color: #D4A84B;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .hero-hours {
+    color: #F4ECD8;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0;
+    opacity: 0.9;
+  }
+
+  .hero-pill-ctas {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 0.25rem;
+  }
+
+  /* Ghost style — base for all pill CTAs */
+  .hero-pill-cta {
+    display: inline-block;
+    padding: 0.55rem 1.5rem;
+    background: rgba(10, 20, 12, 0.7);
+    border: 1.5px solid #D4A84B;
+    border-radius: 9999px;
+    color: #F4ECD8;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .hero-pill-cta:hover {
+    background-color: #D4A84B;
+    color: #0f1a14;
+  }
+
+  /* Solid fill — primary CTA (Oakland) */
+  .hero-pill-cta--primary {
+    background: #D4A84B;
+    color: #0f1a14;
+    border: none;
+  }
+
+  .hero-pill-cta--primary:hover {
+    background-color: #c49940;
+    color: #0f1a14;
+  }
+
+  /* Mobile: stack vertically */
+  @media (max-width: 767px) {
+    .hero-split {
+      display: grid;
+      grid-template-rows: auto auto auto;
+      min-height: auto;
+    }
+
+    .hero-half {
+      min-height: 35vh;
+      flex: none;
+      width: 100%;
+    }
+
+    .hero-half-content--right {
+      align-items: flex-start;
+      text-align: left;
+      margin-left: 0;
+    }
+
+    .hero-divider {
+      display: none;
+    }
+
+    .hero-center-overlay {
+      position: relative;
+      left: auto;
+      top: auto;
+      transform: none;
+      width: 100%;
+      padding: 1rem 0.75rem;
+      background-color: #0f1a14;
+      order: 2;
+    }
+
+    .hero-center-pill {
+      min-width: unset;
+      max-width: 100%;
+      border: none;
+      background: transparent;
+      backdrop-filter: none;
+    }
+
+    .hero-logo {
+      width: 240px;
+    }
+
+    .hero-left { order: 1; }
+    .hero-center-overlay { order: 2; }
+    .hero-right { order: 3; }
+  }
+
+  /* ========= TEXT HERO (inner pages) ========= */
+  .text-hero {
+    background-color: #1a4d2e;
+    background-image: linear-gradient(135deg, rgba(15, 26, 20, 0.88) 0%, rgba(26, 77, 46, 0.82) 100%), url('/bar.webp');
+    background-size: cover;
+    background-position: center;
+    padding: 3.5rem 1rem;
+    text-align: center;
+  }
+
+  .text-hero-inner {
+    max-width: 48rem;
+    margin: 0 auto;
+  }
+
+  .text-hero-headline {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    color: #F4ECD8;
+    margin-bottom: 1rem;
+    line-height: 1.15;
+  }
+
+  .text-hero-subhead {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 1.1rem;
+    color: rgba(244, 236, 216, 0.85);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .text-hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .hero-cta-btn {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    border-radius: 4px;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 0.2s;
+  }
+
+  .hero-cta-btn--primary {
+    background-color: #D4A84B;
+    color: #0f1a14;
+  }
+
+  .hero-cta-btn--primary:hover {
+    background-color: #c49940;
+  }
+
+  .hero-cta-btn--secondary {
+    background-color: transparent;
+    color: #D4A84B;
+    border: 2px solid #D4A84B;
+  }
+
+  .hero-cta-btn--secondary:hover {
+    background-color: #D4A84B;
+    color: #0f1a14;
+  }
+</style>

@@ -1,0 +1,18 @@
+{
+  "site_name": "Finn McCool's",
+  "default_title": "Finn McCool's Irish Bar Pittsburgh | Oakland & South Side",
+  "default_description": "Finn McCool's Irish Bar — two locations in Pittsburgh. Oakland near Pitt and South Side on E Carson St. Open Thursday through Saturday 6PM to 2AM.",
+  "twitter": "",
+  "og_image": "/og-image.jpg",
+  "locale": "en_US",
+  "pages": {
+    "/": {
+      "title": "Finn McCool's Irish Bar Pittsburgh | Oakland & South Side Locations",
+      "description": "Looking for a bar in Oakland or South Side Pittsburgh? Finn McCool's has two locations open Thursday through Saturday 6PM to 2AM. Pool, darts, drink specials, and event bookings."
+    },
+    "/specials": {
+      "title": "Drink Specials | Finn McCool's Pittsburgh Irish Bar",
+      "description": "Finn McCool's Pittsburgh drink specials: Irish Fuel cocktail $6, bucket deals, $4 shot nights on Thursdays, and pitcher pours on weekends. Oakland and South Side."
+    }
+  }
+}
