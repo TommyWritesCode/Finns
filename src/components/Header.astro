@@ -6,10 +6,10 @@ const navLinks = [
 ---
 
 <header class="sticky top-0 z-50 bg-[#0f1a14] border-t border-t-[#D4A84B]/40 border-b border-b-[#D4A84B]/40">
-  <div class="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-2 md:h-[72px] md:px-4">
+  <div class="header-inner mx-auto flex h-16 max-w-[1200px] items-center justify-between px-2 md:h-[72px] md:px-4">
 
     <!-- LEFT: logo -->
-    <a href="/" aria-label="Finn McCool's home" class="flex items-center">
+    <a href="/" aria-label="Finn McCool's home" class="header-logo-link flex items-center">
       <img
         src="/logo.webp"
         alt="Finn McCool's"
@@ -93,6 +93,17 @@ const navLinks = [
     transform: translateY(0);
   }
   body.menu-open { overflow: hidden; }
+
+  @media (max-width: 767px) {
+    .header-inner {
+      position: relative;
+    }
+    .header-logo-link {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
 </style>
 
 <script>

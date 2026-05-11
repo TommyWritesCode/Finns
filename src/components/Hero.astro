@@ -23,7 +23,6 @@ const isSplitHero = !headline;
       <div class="hero-half-content hero-half-content--left">
         <span class="location-label">OAKLAND</span>
         <p class="location-address">420 Semple St, Pittsburgh PA</p>
-        <a href="#oakland" class="hero-cta">Oakland &rarr;</a>
       </div>
     </div>
 
@@ -56,7 +55,6 @@ const isSplitHero = !headline;
       <div class="hero-half-content hero-half-content--right">
         <span class="location-label">SOUTH SIDE</span>
         <p class="location-address">1501 E Carson St, Pittsburgh PA</p>
-        <a href="#southside" class="hero-cta">South Side &rarr;</a>
       </div>
     </div>
   </section>
@@ -338,8 +336,8 @@ const isSplitHero = !headline;
     }
 
     .hero-center-overlay { order: 1; }
-    .hero-left { order: 2; }
-    .hero-right { order: 3; }
+    .hero-left { display: none; }
+    .hero-right { display: none; }
 
     .hero-pill-cta {
       padding: 0.875rem 2rem;

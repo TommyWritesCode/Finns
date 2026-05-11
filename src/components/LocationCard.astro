@@ -227,8 +227,8 @@ const labelLocation = location.id === 'oakland' ? 'OAKLAND' : 'SOUTH SIDE';
     flex-direction: column;
     gap: 1.25rem;
     justify-content: center;
-    align-items: center;
-    text-align: center;
+    align-items: flex-start;
+    text-align: left;
   }
 
   .location-eyebrow {
@@ -322,7 +322,7 @@ const labelLocation = location.id === 'oakland' ? 'OAKLAND' : 'SOUTH SIDE';
   .location-feature-item {
     display: flex;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 0.625rem;
     color: rgba(244, 236, 216, 0.75);
     font-family: 'Inter', system-ui, sans-serif;
@@ -347,6 +347,12 @@ const labelLocation = location.id === 'oakland' ? 'OAKLAND' : 'SOUTH SIDE';
     }
 
     .location-photo {
+      display: block;
+      min-height: 240px;
+    }
+
+    .slider-btn,
+    .slider-dots {
       display: none;
     }
 
