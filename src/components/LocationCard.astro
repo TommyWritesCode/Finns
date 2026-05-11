@@ -35,13 +35,14 @@ const {
   location,
   imageUrl,
   imageAlt,
+  reversed = false,
   photos = [],
 } = Astro.props;
 ---
 
 <section
   id={location.id}
-  class="location-section"
+  class:list={['location-section', reversed ? 'location-section--reversed' : '']}
   style="scroll-margin-top: 116px;"
 >
   <!-- Photo full width on top with address overlay -->
@@ -100,17 +101,30 @@ const {
 </section>
 
 <style>
+  /* ── Desktop: side-by-side grid ── */
   .location-section {
     background-color: #0f1a14;
     border-top: 1px solid rgba(212, 168, 75, 0.2);
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 55% 45%;
+    min-height: 600px;
+  }
+
+  .location-section--reversed {
+    grid-template-columns: 45% 55%;
+  }
+
+  .location-section--reversed .location-photo {
+    order: 2;
+  }
+
+  .location-section--reversed .location-content {
+    order: 1;
   }
 
   /* ── Photo ── */
   .location-photo {
     position: relative;
-    height: 480px;
     overflow: hidden;
   }
 
@@ -207,16 +221,13 @@ const {
 
   /* ── Content ── */
   .location-content {
-    padding: 3rem 2rem;
+    padding: 3.5rem 3rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     gap: 1.25rem;
-    max-width: 640px;
-    margin: 0 auto;
-    width: 100%;
-    box-sizing: border-box;
+    justify-content: center;
   }
 
   .location-name {
@@ -297,8 +308,21 @@ const {
     margin-top: 0.2rem;
   }
 
-  /* ── Mobile ── */
+  /* ── Mobile: stack vertically ── */
   @media (max-width: 767px) {
+    .location-section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .location-section--reversed .location-photo {
+      order: 1;
+    }
+
+    .location-section--reversed .location-content {
+      order: 2;
+    }
+
     .location-photo {
       height: 250px;
     }
