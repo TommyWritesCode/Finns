@@ -1,0 +1,461 @@
+---
+// EmailPopup.astro — Email capture popup for Finn McCool's
+// Desktop: centered modal | Mobile: bottom slide-up sheet
+// Trigger: 15s after load OR 50% scroll depth
+// Suppression: localStorage keys finns_popup_v1_last_shown / finns_popup_v1_subscribed
+---
+
+<dialog
+  id="email-popup"
+  aria-modal="true"
+  aria-labelledby="popup-heading"
+  aria-describedby="popup-subhead"
+>
+  <div class="popup-inner" id="popup-inner">
+    <!-- Close button -->
+    <button
+      id="popup-close"
+      class="popup-close"
+      aria-label="Close email signup popup"
+      type="button"
+    >
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" focusable="false">
+        <line x1="1" y1="1" x2="17" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="17" y1="1" x2="1" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <!-- Default state -->
+    <div id="popup-form-state">
+      <h2 id="popup-heading" class="popup-heading">Get on the List</h2>
+      <p id="popup-subhead" class="popup-subhead">
+        Drink specials, event invites, and the occasional heads up when things get really good. First to know, first through the door.
+      </p>
+
+      <form id="popup-form" novalidate>
+        <div class="popup-input-row">
+          <label for="popup-email" class="sr-only">Email address</label>
+          <input
+            type="email"
+            id="popup-email"
+            name="email"
+            placeholder="your@email.com"
+            autocomplete="email"
+            required
+            class="popup-input"
+          />
+          <button type="submit" class="popup-cta">Count Me In</button>
+        </div>
+        <p id="popup-error" class="popup-error" aria-live="polite" hidden></p>
+        <p class="popup-fine-print">No spam. Unsubscribe whenever.</p>
+      </form>
+    </div>
+
+    <!-- Success state (hidden by default) -->
+    <div id="popup-success-state" hidden>
+      <h2 class="popup-heading">You're In</h2>
+      <p class="popup-subhead">
+        Keep an eye on your inbox. We'll be in touch before the good stuff happens.
+      </p>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  /* ── Native dialog reset ──────────────────────────────────── */
+  dialog {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    max-width: none;
+    max-height: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    overflow: hidden;
+  }
+
+  dialog::backdrop {
+    background: rgba(0, 0, 0, 0.65);
+  }
+
+  /* ── Shared inner panel ───────────────────────────────────── */
+  .popup-inner {
+    position: absolute;
+    background-color: #0f1a14;
+    border: 1px solid rgba(212, 168, 75, 0.4);
+    color: #F4ECD8;
+  }
+
+  /* ── Desktop: centered modal ──────────────────────────────── */
+  @media (min-width: 600px) {
+    .popup-inner {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.92);
+      width: min(520px, 90vw);
+      border-radius: 8px;
+      padding: 2.5rem 2.25rem 2rem;
+      opacity: 0;
+      transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+    }
+
+    dialog[open] .popup-inner {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  /* ── Mobile: bottom sheet ─────────────────────────────────── */
+  @media (max-width: 599px) {
+    .popup-inner {
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      max-height: 40vh;
+      border-radius: 16px 16px 0 0;
+      padding: 1.5rem 1.25rem 1.25rem;
+      overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    dialog[open] .popup-inner {
+      transform: translateY(0);
+    }
+  }
+
+  /* ── Reduced motion ───────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .popup-inner {
+      transition: none !important;
+    }
+  }
+
+  /* ── Close button ─────────────────────────────────────────── */
+  .popup-close {
+    position: absolute;
+    top: 0.875rem;
+    right: 0.875rem;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: rgba(244, 236, 216, 0.5);
+    border-radius: 4px;
+    transition: color 0.15s ease;
+    padding: 0;
+  }
+
+  .popup-close:hover,
+  .popup-close:focus-visible {
+    color: #F4ECD8;
+    outline: 2px solid rgba(212, 168, 75, 0.6);
+    outline-offset: 2px;
+  }
+
+  /* ── Typography ───────────────────────────────────────────── */
+  .popup-heading {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(1.4rem, 4vw, 1.75rem);
+    color: #F4ECD8;
+    margin: 0 0 0.625rem;
+    line-height: 1.2;
+    padding-right: 2rem; /* avoid close btn overlap */
+  }
+
+  .popup-subhead {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: clamp(0.825rem, 2vw, 0.9375rem);
+    color: rgba(244, 236, 216, 0.8);
+    margin: 0 0 1.25rem;
+    line-height: 1.55;
+  }
+
+  /* ── Form ─────────────────────────────────────────────────── */
+  .popup-input-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .popup-input {
+    flex: 1 1 180px;
+    min-width: 0;
+    padding: 0.65rem 0.875rem;
+    background-color: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(212, 168, 75, 0.35);
+    border-radius: 4px;
+    color: #F4ECD8;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    transition: border-color 0.15s ease;
+  }
+
+  .popup-input::placeholder {
+    color: rgba(244, 236, 216, 0.4);
+  }
+
+  .popup-input:focus {
+    outline: none;
+    border-color: #D4A84B;
+  }
+
+  .popup-cta {
+    flex-shrink: 0;
+    padding: 0.65rem 1.25rem;
+    background-color: #D4A84B;
+    color: #0f1a14;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease, opacity 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .popup-cta:hover {
+    background-color: #c9993a;
+  }
+
+  .popup-cta:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .popup-fine-print {
+    margin: 0.625rem 0 0;
+    font-size: 0.75rem;
+    color: rgba(244, 236, 216, 0.45);
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  .popup-error {
+    margin: 0.5rem 0 0;
+    font-size: 0.8125rem;
+    color: #f87171;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  /* ── Screen-reader only utility ───────────────────────────── */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+</style>
+
+<script>
+  (function () {
+    const STORAGE_KEY_SHOWN = 'finns_popup_v1_last_shown';
+    const STORAGE_KEY_SUBSCRIBED = 'finns_popup_v1_subscribed';
+    const SUPPRESS_DAYS = 7;
+    const TRIGGER_DELAY_MS = 15000;
+    const SCROLL_THRESHOLD = 0.5;
+
+    // ── Suppression check ──────────────────────────────────────
+    function isSuppressed(): boolean {
+      try {
+        if (localStorage.getItem(STORAGE_KEY_SUBSCRIBED) === 'true') return true;
+        const lastShown = localStorage.getItem(STORAGE_KEY_SHOWN);
+        if (lastShown) {
+          const elapsed = Date.now() - parseInt(lastShown, 10);
+          if (elapsed < SUPPRESS_DAYS * 24 * 60 * 60 * 1000) return true;
+        }
+        return false;
+      } catch {
+        return true; // suppress if localStorage unavailable (private browsing edge case)
+      }
+    }
+
+    function markShown(): void {
+      try {
+        localStorage.setItem(STORAGE_KEY_SHOWN, String(Date.now()));
+      } catch { /* ignore */ }
+    }
+
+    function markSubscribed(): void {
+      try {
+        localStorage.setItem(STORAGE_KEY_SUBSCRIBED, 'true');
+      } catch { /* ignore */ }
+    }
+
+    // ── DOM refs ───────────────────────────────────────────────
+    const dialog = document.getElementById('email-popup') as HTMLDialogElement | null;
+    if (!dialog) return;
+
+    const closeBtn = document.getElementById('popup-close');
+    const form = document.getElementById('popup-form') as HTMLFormElement | null;
+    const emailInput = document.getElementById('popup-email') as HTMLInputElement | null;
+    const errorEl = document.getElementById('popup-error') as HTMLParagraphElement | null;
+    const ctaBtn = form?.querySelector('.popup-cta') as HTMLButtonElement | null;
+    const formState = document.getElementById('popup-form-state');
+    const successState = document.getElementById('popup-success-state');
+
+    let triggered = false;
+
+    // ── Open / close ───────────────────────────────────────────
+    function openPopup(): void {
+      if (triggered || isSuppressed()) return;
+      triggered = true;
+      markShown();
+      dialog!.showModal();
+      // Move focus to first interactive element after animation frame
+      requestAnimationFrame(() => {
+        closeBtn?.focus();
+      });
+    }
+
+    function closePopup(): void {
+      // Trigger out-animation, then actually close after it finishes
+      const inner = document.getElementById('popup-inner');
+      if (!inner) {
+        dialog!.close();
+        return;
+      }
+      // Remove open-state styles by marking transitioning out
+      inner.style.transition = inner.style.transition; // no-op to flush
+      // On mobile: slide back down; on desktop: fade out
+      const isMobile = window.innerWidth < 600;
+      if (isMobile) {
+        inner.style.transform = 'translateY(100%)';
+      } else {
+        inner.style.opacity = '0';
+        inner.style.transform = 'translate(-50%, -50%) scale(0.92)';
+      }
+      setTimeout(() => {
+        dialog!.close();
+        // Reset inline styles so re-open works correctly
+        inner.style.transform = '';
+        inner.style.opacity = '';
+      }, 300);
+    }
+
+    // ── Dismiss handlers ───────────────────────────────────────
+    closeBtn?.addEventListener('click', closePopup);
+
+    dialog.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault(); // prevent native dialog close (we handle animation)
+        closePopup();
+      }
+      // Focus trap
+      if (e.key === 'Tab') {
+        const focusable = Array.from(
+          dialog.querySelectorAll<HTMLElement>(
+            'button, input, [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter(el => !el.hasAttribute('disabled') && !el.closest('[hidden]'));
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    // Backdrop click — only dismiss when clicking outside the inner panel
+    dialog.addEventListener('click', (e: MouseEvent) => {
+      const inner = document.getElementById('popup-inner');
+      if (inner && !inner.contains(e.target as Node)) {
+        closePopup();
+      }
+    });
+
+    // ── Form submission ────────────────────────────────────────
+    function showError(msg: string): void {
+      if (!errorEl) return;
+      errorEl.textContent = msg;
+      errorEl.hidden = false;
+    }
+
+    function clearError(): void {
+      if (!errorEl) return;
+      errorEl.textContent = '';
+      errorEl.hidden = true;
+    }
+
+    form?.addEventListener('submit', async (e: Event) => {
+      e.preventDefault();
+      clearError();
+      const email = emailInput?.value.trim() ?? '';
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showError('Please enter a valid email address.');
+        emailInput?.focus();
+        return;
+      }
+      if (ctaBtn) {
+        ctaBtn.disabled = true;
+        ctaBtn.textContent = 'Signing up...';
+      }
+      try {
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        if (res.ok) {
+          markSubscribed();
+          if (formState) formState.hidden = true;
+          if (successState) successState.hidden = false;
+          // Auto-close after 3s
+          setTimeout(closePopup, 3000);
+        } else {
+          const data = await res.json().catch(() => ({})) as Record<string, unknown>;
+          showError((data.error as string) || 'Something went wrong. Please try again.');
+          if (ctaBtn) {
+            ctaBtn.disabled = false;
+            ctaBtn.textContent = 'Count Me In';
+          }
+        }
+      } catch {
+        showError('Network error. Please check your connection and try again.');
+        if (ctaBtn) {
+          ctaBtn.disabled = false;
+          ctaBtn.textContent = 'Count Me In';
+        }
+      }
+    });
+
+    // ── Trigger logic ──────────────────────────────────────────
+    // 1. 15-second timer
+    const timer = window.setTimeout(openPopup, TRIGGER_DELAY_MS);
+
+    // 2. 50% scroll depth
+    function onScroll(): void {
+      const scrolled = window.scrollY + window.innerHeight;
+      const total = document.documentElement.scrollHeight;
+      if (scrolled / total >= SCROLL_THRESHOLD) {
+        window.clearTimeout(timer);
+        window.removeEventListener('scroll', onScroll, { capture: false });
+        openPopup();
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>

@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import seo from "../data/seo.json";
+import EmailPopup from "../components/EmailPopup.astro";
 
 interface Props {
   title?: string;
@@ -67,5 +68,6 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site ?? "htt
       <slot />
     </main>
     <slot name="footer" />
+    <EmailPopup />
   </body>
 </html>

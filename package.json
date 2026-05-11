@@ -13,6 +13,7 @@
     "smoke": "node scripts/check-site.mjs"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^12.6.13",
     "@astrojs/sitemap": "^3.7.2",
     "@fontsource-variable/playfair-display": "^5.2.8",
     "@fontsource/inter": "^5.2.8",

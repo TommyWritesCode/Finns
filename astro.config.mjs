@@ -2,9 +2,11 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import compress from '@playform/compress';
 import sitemap from '@astrojs/sitemap';
+import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
   output: 'static',
+  adapter: cloudflare(),
   site: 'https://finnmcools.com',
   trailingSlash: 'never',
   build: {
