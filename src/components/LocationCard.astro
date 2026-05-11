@@ -33,23 +33,18 @@ interface Props {
 
 const {
   location,
-  accentColor = 'dark',
   imageUrl,
   imageAlt,
-  reversed = false,
   photos = [],
 } = Astro.props;
-
-const bgColor = accentColor === 'green' ? '#0f1a14' : '#0f1a14';
-const labelLocation = location.id === 'oakland' ? 'OAKLAND' : 'SOUTH SIDE';
 ---
 
 <section
   id={location.id}
-  class:list={['location-section', reversed ? 'location-section--reversed' : '']}
-  style={`background-color: ${bgColor}; scroll-margin-top: 116px;`}
+  class="location-section"
+  style="scroll-margin-top: 116px;"
 >
-  <!-- Photo column -->
+  <!-- Photo full width on top with address overlay -->
   <div class="location-photo">
     {photos.length > 0 ? (
       <div class="photo-slider" id={`slider-${location.id}`}>
@@ -61,8 +56,8 @@ const labelLocation = location.id === 'oakland' ? 'OAKLAND' : 'SOUTH SIDE';
             loading={i === 0 ? 'eager' : 'lazy'}
           />
         ))}
-        <button class="slider-btn slider-btn--prev" aria-label="Previous photo" data-slider={`slider-${location.id}`}>&#8592;</button>
-        <button class="slider-btn slider-btn--next" aria-label="Next photo" data-slider={`slider-${location.id}`}>&#8594;</button>
+        <button class="slider-btn slider-btn--prev" aria-label="Previous photo">&#8592;</button>
+        <button class="slider-btn slider-btn--next" aria-label="Next photo">&#8594;</button>
         <div class="slider-dots">
           {photos.map((_, i) => (
             <span class:list={['slider-dot', i === 0 ? 'slider-dot--active' : '']} data-index={i}></span>
@@ -72,39 +67,27 @@ const labelLocation = location.id === 'oakland' ? 'OAKLAND' : 'SOUTH SIDE';
     ) : (
       <img src={imageUrl} alt={imageAlt} class="location-photo-img" loading="lazy" />
     )}
+    <div class="photo-address-overlay">
+      <p class="photo-address-text">{location.address} &middot; {location.city}, {location.state} {location.zip}</p>
+    </div>
   </div>
 
-  <!-- Content column -->
+  <!-- Content centered below the photo -->
   <div class="location-content">
-    <p class="location-eyebrow">{labelLocation}</p>
     <h2 class="location-name">{location.name}</h2>
     <p class="location-tagline">{location.tagline}</p>
-
     <HoursCard />
-
-    <div class="location-meta">
-      <address class="location-address">
-        {location.address}<br />
-        {location.city}, {location.state} {location.zip}
-      </address>
-
-      <a
-        href={location.mapsUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="location-directions-btn"
-      >
-        Get Directions
-      </a>
-
-      <a
-        href={`tel:${location.phone}`}
-        class="location-phone"
-      >
-        {location.phoneDisplay}
-      </a>
-    </div>
-
+    <a
+      href={location.mapsUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="location-directions-btn"
+    >
+      Get Directions
+    </a>
+    <a href={`tel:${location.phone}`} class="location-phone">
+      {location.phoneDisplay}
+    </a>
     <ul class="location-features" aria-label="Features">
       {location.features.map((feature) => (
         <li class="location-feature-item">
@@ -118,26 +101,16 @@ const labelLocation = location.id === 'oakland' ? 'OAKLAND' : 'SOUTH SIDE';
 
 <style>
   .location-section {
-    display: grid;
-    grid-template-columns: 55% 45%;
-    min-height: 600px;
+    background-color: #0f1a14;
+    border-top: 1px solid rgba(212, 168, 75, 0.2);
+    display: flex;
+    flex-direction: column;
   }
 
-  .location-section--reversed {
-    grid-template-columns: 45% 55%;
-  }
-
-  /* Photo always first in DOM; reversed layout swaps visual order */
-  .location-section--reversed .location-photo {
-    order: 2;
-  }
-
-  .location-section--reversed .location-content {
-    order: 1;
-  }
-
+  /* ── Photo ── */
   .location-photo {
     position: relative;
+    height: 480px;
     overflow: hidden;
   }
 
@@ -148,12 +121,9 @@ const labelLocation = location.id === 'oakland' ? 'OAKLAND' : 'SOUTH SIDE';
     display: block;
   }
 
-  /* Inline photo slider */
   .photo-slider {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+    position: absolute;
+    inset: 0;
   }
 
   .slider-img {
@@ -164,12 +134,10 @@ const labelLocation = location.id === 'oakland' ? 'OAKLAND' : 'SOUTH SIDE';
     object-fit: cover;
     opacity: 0;
     transition: opacity 0.4s ease;
-    display: block;
   }
 
   .slider-img--active {
     opacity: 1;
-    position: relative; /* takes up space so parent has height */
   }
 
   .slider-btn {
@@ -191,16 +159,13 @@ const labelLocation = location.id === 'oakland' ? 'OAKLAND' : 'SOUTH SIDE';
     z-index: 10;
   }
 
-  .slider-btn:hover {
-    background: rgba(10, 20, 12, 0.9);
-  }
-
-  .slider-btn--prev { left: 0.75rem; }
-  .slider-btn--next { right: 0.75rem; }
+  .slider-btn:hover { background: rgba(10, 20, 12, 0.9); }
+  .slider-btn--prev { left: 1rem; }
+  .slider-btn--next { right: 1rem; }
 
   .slider-dots {
     position: absolute;
-    bottom: 0.75rem;
+    bottom: 1rem;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -217,28 +182,41 @@ const labelLocation = location.id === 'oakland' ? 'OAKLAND' : 'SOUTH SIDE';
     cursor: pointer;
   }
 
-  .slider-dot--active {
-    background: #D4A84B;
+  .slider-dot--active { background: #D4A84B; }
+
+  /* Address pinned to bottom of photo */
+  .photo-address-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 100%);
+    padding: 2.5rem 1.5rem 1rem;
+    z-index: 5;
   }
 
+  .photo-address-text {
+    color: #F4ECD8;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.9rem;
+    margin: 0;
+    text-align: center;
+    letter-spacing: 0.03em;
+    opacity: 0.92;
+  }
+
+  /* ── Content ── */
   .location-content {
-    padding: 3.5rem 3rem;
+    padding: 3rem 2rem;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
     gap: 1.25rem;
-    justify-content: center;
-    align-items: flex-start;
-    text-align: left;
-  }
-
-  .location-eyebrow {
-    color: #D4A84B;
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    margin: 0;
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .location-name {
@@ -258,26 +236,9 @@ const labelLocation = location.id === 'oakland' ? 'OAKLAND' : 'SOUTH SIDE';
     opacity: 0.85;
   }
 
-  .location-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.625rem;
-    margin-top: 1rem;
-  }
-
-  .location-address {
-    color: #F4ECD8;
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 0.875rem;
-    font-style: normal;
-    line-height: 1.6;
-    opacity: 0.8;
-  }
-
   .location-directions-btn {
     display: inline-block;
-    width: fit-content;
-    padding: 0.5rem 1.25rem;
+    padding: 0.6rem 1.75rem;
     background-color: transparent;
     border: 1px solid #D4A84B;
     color: #D4A84B;
@@ -299,31 +260,29 @@ const labelLocation = location.id === 'oakland' ? 'OAKLAND' : 'SOUTH SIDE';
   .location-phone {
     color: rgba(244, 236, 216, 0.85);
     font-family: 'Inter', system-ui, sans-serif;
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     font-weight: 500;
     text-decoration: none;
     letter-spacing: 0.04em;
-    transition: opacity 0.2s;
   }
 
-  .location-phone:hover {
-    opacity: 0.7;
-  }
+  .location-phone:hover { opacity: 0.7; }
 
   .location-features {
     list-style: none;
     padding: 0;
-    margin: 1rem 0 0 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    width: 100%;
   }
 
   .location-feature-item {
     display: flex;
     align-items: flex-start;
-    justify-content: flex-start;
-    gap: 0.625rem;
+    justify-content: center;
+    gap: 0.5rem;
     color: rgba(244, 236, 216, 0.75);
     font-family: 'Inter', system-ui, sans-serif;
     font-size: 0.875rem;
@@ -335,27 +294,18 @@ const labelLocation = location.id === 'oakland' ? 'OAKLAND' : 'SOUTH SIDE';
     font-size: 0.75em;
     opacity: 0.6;
     flex-shrink: 0;
-    line-height: 1.6;
+    margin-top: 0.2rem;
   }
 
-  /* Mobile: stack */
+  /* ── Mobile ── */
   @media (max-width: 767px) {
-    .location-section {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto;
-      border-top: 2px solid rgba(212, 168, 75, 0.3);
-    }
-
     .location-photo {
+      height: 250px;
+    }
+
+    .slider-btn,
+    .slider-dots {
       display: none;
-    }
-
-    .location-section--reversed .location-photo {
-      order: 1;
-    }
-
-    .location-section--reversed .location-content {
-      order: 2;
     }
 
     .location-content {
@@ -388,7 +338,6 @@ const labelLocation = location.id === 'oakland' ? 'OAKLAND' : 'SOUTH SIDE';
     slider.querySelector('.slider-btn--next')?.addEventListener('click', () => goTo(current + 1));
     dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
 
-    // auto-advance every 4s
     let timer = setInterval(() => goTo(current + 1), 4000);
     slider.addEventListener('mouseenter', () => clearInterval(timer));
     slider.addEventListener('mouseleave', () => { timer = setInterval(() => goTo(current + 1), 4000); });
