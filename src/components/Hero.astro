@@ -297,7 +297,7 @@ const isSplitHero = !headline;
     }
 
     .hero-half {
-      min-height: 35vh;
+      min-height: 28vh;
       flex: none;
       width: 100%;
     }
@@ -336,8 +336,11 @@ const isSplitHero = !headline;
     }
 
     .hero-center-overlay { order: 1; }
-    .hero-left { display: none; }
-    .hero-right { display: none; }
+    .hero-left { order: 2; }
+    .hero-right { order: 3; }
+
+    /* Strip the address text from banners on mobile — info lives in the cards below */
+    .location-address { display: none; }
 
     .hero-pill-cta {
       padding: 0.875rem 2rem;
