@@ -10,6 +10,7 @@ import locations from "../data/locations.json";
 import seo from "../data/seo.json";
 
 const pageData = seo.pages["/"];
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout title={pageData.title} description={pageData.description}>
@@ -20,31 +21,31 @@ const pageData = seo.pages["/"];
   <LocationCard
     location={locations[0]}
     accentColor="dark"
-    imageUrl="/bar.webp"
+    imageUrl={`${base}/bar.webp`}
     imageAlt="Interior of Finn McCools Oakland — warm lighting, bar, brick walls, string lights"
     photos={[
-      { src: "/bar.webp", alt: "Interior bar at Finn McCools Oakland — bottles, brick, string lights" },
-      { src: "/buildingfront_oakland.webp", alt: "Finn McCools Oakland exterior — dark brick with Finn McCools sign" },
-      { src: "/darts_oakland.webp", alt: "Dart machines and game machines with colorful string lights" },
-      { src: "/patio_oakland.webp", alt: "Outdoor patio with yellow stools, barrels, astroturf, and string lights" },
-      { src: "/pooltable_oakland.webp", alt: "Pool table with Pittsburgh mascot mural — dogs playing pool" },
-      { src: "/drafts_oakland.webp", alt: "Draft tap handles — Coors Light, Penguins tap, and more" },
+      { src: `${base}/bar.webp`, alt: "Interior bar at Finn McCools Oakland — bottles, brick, string lights" },
+      { src: `${base}/buildingfront_oakland.webp`, alt: "Finn McCools Oakland exterior — dark brick with Finn McCools sign" },
+      { src: `${base}/darts_oakland.webp`, alt: "Dart machines and game machines with colorful string lights" },
+      { src: `${base}/patio_oakland.webp`, alt: "Outdoor patio with yellow stools, barrels, astroturf, and string lights" },
+      { src: `${base}/pooltable_oakland.webp`, alt: "Pool table with Pittsburgh mascot mural — dogs playing pool" },
+      { src: `${base}/drafts_oakland.webp`, alt: "Draft tap handles — Coors Light, Penguins tap, and more" },
     ]}
   />
 
   <LocationCard
     location={locations[1]}
     accentColor="dark"
-    imageUrl="/finns-southside.jpg"
+    imageUrl={`${base}/finns-southside.jpg`}
     imageAlt="Finn McCools South Side exterior at night — neon signs, corner building, people outside"
     reversed={true}
     photos={[
-      { src: "/finns-southside.jpg", alt: "Finn McCools South Side exterior at night — neon signs, corner building" },
-      { src: "/bar.webp", alt: "Interior bar — bottles, brick, string lights" },
-      { src: "/darts_oakland.webp", alt: "Dart machines and game machines with colorful string lights" },
-      { src: "/patio_oakland.webp", alt: "Outdoor patio with yellow stools, barrels, and string lights" },
-      { src: "/pooltable_oakland.webp", alt: "Pool table with Pittsburgh mascot mural" },
-      { src: "/drafts_oakland.webp", alt: "Draft tap handles — Coors Light, Penguins tap, and more" },
+      { src: `${base}/finns-southside.jpg`, alt: "Finn McCools South Side exterior at night — neon signs, corner building" },
+      { src: `${base}/bar.webp`, alt: "Interior bar — bottles, brick, string lights" },
+      { src: `${base}/darts_oakland.webp`, alt: "Dart machines and game machines with colorful string lights" },
+      { src: `${base}/patio_oakland.webp`, alt: "Outdoor patio with yellow stools, barrels, and string lights" },
+      { src: `${base}/pooltable_oakland.webp`, alt: "Pool table with Pittsburgh mascot mural" },
+      { src: `${base}/drafts_oakland.webp`, alt: "Draft tap handles — Coors Light, Penguins tap, and more" },
     ]}
   />
 

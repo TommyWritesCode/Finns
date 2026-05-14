@@ -12,13 +12,14 @@ interface Props {
 
 const { headline, subhead, primaryCta, secondaryCta } = Astro.props;
 const isSplitHero = !headline;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 {isSplitHero ? (
   <!-- SPLIT-SCREEN HERO (homepage) -->
   <section class="hero-split">
     <!-- Left half: Oakland / bar.webp -->
-    <div class="hero-half hero-left">
+    <div class="hero-half hero-left" style={`background-image: url('${base}/bar.webp')`}>
       <div class="hero-overlay"></div>
       <div class="hero-half-content hero-half-content--left">
         <span class="location-label">OAKLAND</span>
@@ -33,7 +34,7 @@ const isSplitHero = !headline;
     <div class="hero-center-overlay">
       <div class="hero-center-pill">
         <img
-          src="/logo.webp"
+          src={`${base}/logo.webp`}
           alt="Finn McCools"
           class="hero-logo"
           width="360"
@@ -50,7 +51,7 @@ const isSplitHero = !headline;
     </div>
 
     <!-- Right half: South Side / finns-southside.jpg -->
-    <div class="hero-half hero-right">
+    <div class="hero-half hero-right" style={`background-image: url('${base}/finns-southside.jpg')`}>
       <div class="hero-overlay hero-overlay--right"></div>
       <div class="hero-half-content hero-half-content--right">
         <span class="location-label">SOUTH SIDE</span>
@@ -60,7 +61,7 @@ const isSplitHero = !headline;
   </section>
 ) : (
   <!-- TEXT HERO (inner pages: specials, etc.) -->
-  <section class="text-hero">
+  <section class="text-hero" style={`background-image: linear-gradient(135deg, rgba(15, 26, 20, 0.88) 0%, rgba(26, 77, 46, 0.82) 100%), url('${base}/bar.webp')`}>
     <div class="text-hero-inner">
       <h1 class="text-hero-headline">{headline}</h1>
       {subhead && <p class="text-hero-subhead">{subhead}</p>}
@@ -99,14 +100,6 @@ const isSplitHero = !headline;
     background-position: center;
     display: flex;
     align-items: flex-end;
-  }
-
-  .hero-left {
-    background-image: url('/bar.webp');
-  }
-
-  .hero-right {
-    background-image: url('/finns-southside.jpg');
   }
 
   .hero-overlay {
@@ -351,7 +344,6 @@ const isSplitHero = !headline;
   /* ========= TEXT HERO (inner pages) ========= */
   .text-hero {
     background-color: #1a4d2e;
-    background-image: linear-gradient(135deg, rgba(15, 26, 20, 0.88) 0%, rgba(26, 77, 46, 0.82) 100%), url('/bar.webp');
     background-size: cover;
     background-position: center;
     padding: 3.5rem 1rem;

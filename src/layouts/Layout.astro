@@ -54,12 +54,12 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site ?? "htt
 
     <slot name="schema" />
 
-    <link rel="icon" type="image/svg+xml" href="/shamrock.svg" />
+    <link rel="icon" type="image/svg+xml" href={import.meta.env.BASE_URL.replace(/\/$/, '') + '/shamrock.svg'} />
 
     <!-- Preload hero LCP images -->
-    <link rel="preload" as="image" href="/bar.webp" fetchpriority="high" />
-    <link rel="preload" as="image" href="/finns-southside.jpg" fetchpriority="high" />
-    <link rel="preload" as="image" href="/logo.webp" />
+    <link rel="preload" as="image" href={import.meta.env.BASE_URL.replace(/\/$/, '') + '/bar.webp'} fetchpriority="high" />
+    <link rel="preload" as="image" href={import.meta.env.BASE_URL.replace(/\/$/, '') + '/finns-southside.jpg'} fetchpriority="high" />
+    <link rel="preload" as="image" href={import.meta.env.BASE_URL.replace(/\/$/, '') + '/logo.webp'} />
   </head>
   <body class="min-h-screen flex flex-col bg-[#0f1a14] text-[#F4ECD8]">
     <a href="#main" class="skip-link">Skip to main content</a>
