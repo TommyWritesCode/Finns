@@ -1,5 +1,5 @@
 ---
-const images = import.meta.glob<{ default: ImageMetadata }>('/public/gallery/*.{jpeg,jpg,png,gif,webp}');
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/gallery/*.{jpeg,jpg,png,gif,webp}');
 const imageEntries = Object.entries(images);
 ---
 

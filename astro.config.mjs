@@ -5,8 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   output: 'static',
-  site: 'https://tommywritescode.github.io',
-  base: '/Finns',
+  site: 'https://finnmcools.com',
   trailingSlash: 'never',
   build: {
     format: 'directory',
